@@ -1,5 +1,5 @@
 # Bat SSL
-<img align="left" width="128" height="128" src="ims/bat.jpg">  
+<img align="left" width="128" height="128" src="img/bat.jpg">  
 
 Code to train a bat echolocation call classification model using in a self-supervised manner.
 
