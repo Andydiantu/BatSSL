@@ -1,4 +1,4 @@
-# SSL BAT
+# Bat SSL
 
 Code to train a bat echolocation call classification model using in a self-supervised manner.
 
