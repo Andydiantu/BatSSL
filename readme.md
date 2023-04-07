@@ -5,11 +5,11 @@ Code to train a bat echolocation call classification model using in a self-super
 
 ### Getting started
 
-1) Install the miniconda for your operating system from [here](https://docs.conda.io/en/latest/miniconda.html)
+1) Install the miniconda for your operating system from [here](https://docs.conda.io/en/latest/miniconda.html).
 2) Download this code from the repository (by clicking on the green button on top right) and unzip it. 
 3) Create a new environment and install the required packages:
 `conda env create -f environment.yml`
-`conda activate SSLBAT`
+`conda activate SSLBAT`.
 
 ## Code Explaination
 
