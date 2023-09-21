@@ -1,25 +1,69 @@
-# Bat SSL
-<img align="right" width="128" height="128" src="img/bat.jpg">  
+# Bat SSL User Guide
+
+## Getting started
+
+1) Install the miniconda for your operating system from [here](https://docs.conda.io/en/latest/miniconda.html).
+2) Download this code from the repository (by clicking on the green button on top right) and unzip it. 
+3) Create a new environment and install the required packages:
+`conda env create -f environment.yml`
+`conda activate SSLBAT`.
+
+## Code Explaination
+
+### Audio Preprocessing
+
+`src/dfLoader.py` contains function involves loading raw audio file and annotation files, converting audio files to spectrogram, and trimming out spectrograms which only contrain one call according to the annotation given. 
+
+`src/dataAug.py` contains function involves all data augmentation applied, and function to apply all augmentations to each spectrogram in a tensor. 
+
+`src/genDatasets.py` contains function to generate static dataset files, including split train test dataset and generate nested subsampled train dataset. 
+
+### Baseline Code
+
+`src/resNet18.py` contains code of implementing a resNet-18 structure
+
+`src/batNet.py` code to train the baseline model from scratch.
+
+`src/resNet18LinEval.py` linear evaluate the supervise trained baseline model.
+
+### Autoencoder Code
+
+`src/autoEncoder.py` contains code of implementing a resnet-18 based autoencoder.
+
+`src/autoEncoderTrain.py` pretrain the autoencoder in self-supervised manner from scratch.
+
+`src/autoEncoderFinetune.py` finetune the pretrained autoencoder model.
 
 
-## What is Bat SSL?
+### SimCLR code
 
-Bat SSL is a Python-based tool designed for the classification of bat echolocation calls within full-spectrum audio recordings. The code embodies the machine learning pipeline I presented in my report, [Monitoring Bat Activity in Audio with Self-Supervised Learning](https://github.com/Andydiantu/BatSSL/blob/main/Final_Report.pdf).
+`src/SimCLR.py` contains code of implementing a resnet-18 base SimCLR model.
 
-## The Intersection of Bats and Self-Supervised Learning
+`src/SimCLRTrain.py` pretrain the SimCLR model in self-supervised manner from scratch.
 
-Bats serve as exceptional bioindicators. The dynamics of their population and species offer a lens to assess anthropogenic impacts on biodiversity and the environment.
+`src/SimCLRFinetune.py` finetune the pretrained self-supervised model.
 
-However, manually labeling bat echolocation calls is arduous. The self-supervised approach leverages vast amounts of unlabeled data, enhancing the performance and mitigating this challenge.
+### Other code
 
-## Performance Insights
+`src/evalModel.py` evaluate the model performance. 
 
-The table below demonstrates that with self-supervised pretraining, Bat SSL achieves competitive accuracy using just half of the labeled data when juxtaposed with its fully supervised counterpart. Remarkably, with a mere 10% of labeled data, the accuracy only dips by 9%.
+`src/logisticRegression.py` linear evaluate the pretrained model using mutinomial logistic regression. 
 
-|              | Supervised | BatSSL with 50% Labeled Data | BatSSL with 10% Labeled Data |
-|--------------|------------|-----------------------------|-----------------------------|
-| Accuracy (%) |    75.92   |           75.49             |           66.19             |
+`src/pltClassImg.py` plot the average image for each class.
 
-In its self-supervised pretraining phase, Bat SSL effectively captures visual representations on par with those gleaned by the supervised baseline, all without leveraging any labeled data at the genus level. This prowess is evident in the T-SNE plots provided below.
 
-<img  src="img/sne.jpg">  
+## Running the model on your own data
+
+After you follow the steps in the *Getting started* section, you could try train the model using you own data by running the following command.
+
+### Self-supervised pretraining
+
+**Autoencoder**: `python src/autoEncoderTrain.py --epochs_train NUMOFTRAININGEPOCH --modelOutputName MODELOUTPUTNAME`
+
+**SimCLR**: `python src/contrastNet.py --epochs_train NUMOFTRAININGEPOCH --modelOutputName MODELOUTPUTNAME`
+
+### Finetuning
+
+**Autoencoder**: `python src/autoEncoderFinetune.py --epochs_Finetune NUMOFTRAININGEPOCH --linEval False --datasetPath PATHTODATASET --modelOutputName PATHTOPRETRAINEDMODEL`
+
+**SimCLR**: `python src/SimCLRFinetune.py --epochs_Finetune NUMOFTRAININGEPOCH --linEval False --datasetPath PATHTODATASET --modelOutputName PATHTOPRETRAINEDMODEL`
