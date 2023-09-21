@@ -22,4 +22,4 @@ The table below demonstrates that with self-supervised pretraining, Bat SSL achi
 
 In its self-supervised pretraining phase, Bat SSL effectively captures visual representations on par with those gleaned by the supervised baseline, all without leveraging any labeled data at the genus level. This prowess is evident in the T-SNE plots provided below.
 
-<img  src="img/sne.png">  
+<img  src="img/sne.jpg">  
